@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +21,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+@SuppressWarnings("deprecation")
+@EnableWebSecurity
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 	
-	private enum ROLES{ADMIN,EMPLOYEE}
+	private enum ROLES{ADMIN,USER}
 
 	@Bean
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -33,14 +37,14 @@ public class SecurityConfiguration {
 		http.httpBasic(withDefaults());
 		http.headers().frameOptions().sameOrigin();
 		http.csrf(csrf->csrf.disable());
-		http.oauth2ResourceServer(oauth->oauth.jwt(Customizer.withDefaults()));
+//		http.oauth2ResourceServer(oauth->oauth.jwt(Customizer.withDefaults()));
 		return http.build();
 	}
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
 		
-		var employeeUser = userGenerator("ashraf","Ashraf@123",ROLES.EMPLOYEE);
+		var employeeUser = userGenerator("ashraf","Ashraf@123",ROLES.USER);
 		var adminUser = userGenerator("saif","Saif@123",ROLES.ADMIN);
 		var jdbcUserDetailsManager = new JdbcUserDetailsManager(getDataSource());
 		jdbcUserDetailsManager.createUser(employeeUser);
