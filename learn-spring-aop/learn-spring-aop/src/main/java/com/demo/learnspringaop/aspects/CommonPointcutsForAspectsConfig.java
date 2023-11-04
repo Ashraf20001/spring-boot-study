@@ -2,7 +2,7 @@ package com.demo.learnspringaop.aspects;
 
 import org.aspectj.lang.annotation.Pointcut;
 
-public class CommonAspectConfig {
+public class CommonPointcutsForAspectsConfig {
 
 	@Pointcut("(execution(* com.demo.learnspringaop.*.*.*(..)))")
 	public void businessAndDataLogg() {}

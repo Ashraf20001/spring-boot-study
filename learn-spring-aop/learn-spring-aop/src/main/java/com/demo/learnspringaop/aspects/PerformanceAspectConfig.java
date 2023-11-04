@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Aspect
 @Configuration
-public class PerformanceAspect {
+public class PerformanceAspectConfig {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceAspect.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceAspectConfig.class);
 	
 //	@Around(value = "com.demo.learnspringaop.aspects.CommonAspectConfig.allBeanAspectPointcut()")
-	@Around(value = "com.demo.learnspringaop.aspects.CommonAspectConfig.timeTrackAnnotation()")
+	@Around(value = "com.demo.learnspringaop.aspects.CommonPointcutsForAspectsConfig.timeTrackAnnotation()")
 	public Object logPerformaceForMethods(ProceedingJoinPoint proceedJoinPoint) throws Throwable {
 		// Start Timer
 		long startTime = System.currentTimeMillis();
