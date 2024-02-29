@@ -1,0 +1,5 @@
+package com.demo.ldap.dto;
+
+public class LoginDto {
+
+}

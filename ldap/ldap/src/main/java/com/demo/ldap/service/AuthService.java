@@ -1,0 +1,45 @@
+package com.demo.ldap.service;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
+import com.demo.ldap.dto.LoginDto;
+import com.demo.ldap.entity.User;
+import com.demo.ldap.sql.repository.UserRepository;
+import com.demo.ldap.utils.JwtUtils;
+
+@Service
+public class AuthService {
+		
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	public String authenticateUser(LoginDto obj) throws Exception {
+		if(obj.getUsername()==null && obj.getPassword()==null) {
+			throw new Exception("User Details is Not Valid");
+		}
+		
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(obj.getUsername(), obj.getPassword());
+		Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+		boolean isAuthenticated = authenticate.isAuthenticated();
+		if(!isAuthenticated) {
+			throw new Exception("Invalid Credentials");
+		}
+		
+		User userDetail = userRepository.findByUserName(obj.getUsername());
+		JwtUtils.setSecurityContext(userDetail);
+		String jwtToken = jwtUtils.generateJwtToken(userDetail);
+		return jwtToken;
+	}
+}

@@ -1,0 +1,5 @@
+package com.demo.ldap.service;
+
+public class AuthService {
+
+}

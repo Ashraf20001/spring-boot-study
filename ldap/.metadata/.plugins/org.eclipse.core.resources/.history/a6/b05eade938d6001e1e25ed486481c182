@@ -1,0 +1,5 @@
+package com.demo.ldap.entity;
+
+public class Role {
+
+}

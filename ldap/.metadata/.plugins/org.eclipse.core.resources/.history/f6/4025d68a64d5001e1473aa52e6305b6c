@@ -1,0 +1,5 @@
+package com.demo.ldap.controller;
+
+public class HelloWorldAPI {
+
+}

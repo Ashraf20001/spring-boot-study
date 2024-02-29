@@ -1,0 +1,29 @@
+package com.demo.ldap.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
+import com.demo.ldap.dto.LoginDto;
+
+@Service
+public class AuthService {
+		
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	public String authenticateUser(LoginDto obj) throws Exception {
+		if(obj.getUsername()==null && obj.getPassword()==null) {
+			throw new Exception("User Details is Not Valid");
+		}
+		
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(obj.getUsername(), obj.getPassword());
+		Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+		Object principal = authenticate.getPrincipal();
+		System.out.println(principal);
+		return "Logged in Successfully";
+		
+	}
+}

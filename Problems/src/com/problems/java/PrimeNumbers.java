@@ -1,5 +1,7 @@
 package com.problems.java;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class PrimeNumbers {
@@ -22,9 +24,9 @@ public class PrimeNumbers {
 			
 			boolean [] booArr	=new boolean[num1+1];			
 			
-			for(int i=2; i<=num1;i++) {
+//			for(int i=2; i<=num1;i++) { 
+		for(int i=2; i<=Math.sqrt(num1);i++) {		// Approach 3 (traverese i till the root of n number)
 				if(!booArr[i]) {
-					System.out.println(i);
 //					for(int j=2*i;j<=num1;j=j+i) {  Approach 1 (j as multiples of i)
 //						
 //						booArr[j]=true;
@@ -35,7 +37,11 @@ public class PrimeNumbers {
 					}
 				}
 			}
-			
+		
+			for (int i=2; i<booArr.length;i++) {
+				if(!booArr[i])
+					System.out.println(i);
+			}
 		}
 
 		private static boolean isPrime(int num1) { 

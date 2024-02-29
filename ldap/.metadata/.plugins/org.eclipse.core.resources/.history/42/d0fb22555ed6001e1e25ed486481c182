@@ -1,0 +1,39 @@
+package com.demo.ldap.dto;
+
+import java.util.List;
+
+public class UserDto {
+		
+	private String userName;
+	private String emailId;
+	private List<String> roles;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	public List<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+	public UserDto(String userName, String emailId, List<String> roles) {
+		super();
+		this.userName = userName;
+		this.emailId = emailId;
+		this.roles = roles;
+	}
+	public UserDto() {
+		super();
+	}
+	
+	
+}

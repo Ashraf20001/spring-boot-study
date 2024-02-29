@@ -1,0 +1,25 @@
+package com.demo.ldap.service;
+
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.stereotype.Service;
+
+import com.demo.ldap.entity.User;
+import com.demo.ldap.sql.repository.UserRepository;
+
+@Service
+public class UserService {
+
+		@Autowired
+		private UserRepository userRepository;
+		
+		@Autowired
+		private LdapTemplate ldapTemplate;
+		
+		public void saveUserDetails(User user) {
+			user.setIdentity(UUID.randomUUID().toString());
+			userRepository.save(user);
+		}
+}

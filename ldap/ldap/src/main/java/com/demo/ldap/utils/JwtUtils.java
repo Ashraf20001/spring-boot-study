@@ -1,0 +1,112 @@
+package com.demo.ldap.utils;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+
+import com.demo.ldap.entity.Role;
+import com.demo.ldap.entity.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import jakarta.servlet.http.HttpServletRequest;
+
+@Component
+public class JwtUtils {
+
+	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+	
+	/**
+	 * jwtSecret
+	 */
+	@Value("${jwt.jwtSecret}")
+	private String jwtSecret;
+
+	/**
+	 * jwtExpirationMs
+	 */
+	@Value("${jwt.jwtExpirationMs}")
+	private int jwtExpirationMs;
+	
+	public String generateJwtToken(User userDetails)
+			throws JsonProcessingException {
+		Map<String,Object> claimMap= generateClaimMap(userDetails);
+		return Jwts.builder().setSubject(userDetails.getUserName()).addClaims(claimMap).setIssuedAt(new Date())
+				.setIssuer("self")
+				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+	}
+	
+	private Map<String, Object> generateClaimMap(User userDetails) {
+		Map<String, Object> claimMap = new HashMap<>();
+		List<Role> roleList = userDetails.getRoleList();
+		List<String> roles=roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
+		claimMap.put("username", userDetails.getUserName());
+		claimMap.put("userId", userDetails.getUserId());
+		claimMap.put("roleList",roles);
+		return claimMap;
+	}
+
+	public boolean validateJwtToken(String authToken) {
+		try {
+			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+			return true;
+		} catch (SignatureException e) {
+			logger.error("Invalid JWT signature: {}", e.getMessage());
+		} catch (MalformedJwtException e) {
+			logger.error("Invalid JWT token: {}", e.getMessage());
+		} catch (ExpiredJwtException e) {
+			logger.error("JWT token is expired: {}", e.getMessage());
+		} catch (UnsupportedJwtException e) {
+			logger.error("JWT token is unsupported: {}", e.getMessage());
+		} catch (IllegalArgumentException e) {
+			logger.error("JWT claims string is empty: {}", e.getMessage());
+		}
+
+		return false;
+	}
+	
+	public static void setSecurityContext(User userDetails) {
+		
+		List<GrantedAuthority> authorities = userDetails.getRoleList().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
+			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,authorities);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+	
+	public String getUserNameFromJwtToken(String token) {
+		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+	}
+	
+	public static void setSecurityContextForJwtFilter(HttpServletRequest request,User userDetails, List<String> roleList) {
+		List<GrantedAuthority> authorities = roleList.stream()
+				.map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,authorities);
+			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+	
+	public Claims getClaims(String token) {
+		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+	}
+
+
+}

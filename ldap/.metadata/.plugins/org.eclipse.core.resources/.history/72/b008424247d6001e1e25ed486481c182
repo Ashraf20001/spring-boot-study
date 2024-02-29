@@ -1,0 +1,153 @@
+package com.demo.ldap.entity;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.ldap.odm.annotations.Attribute;
+import org.springframework.ldap.odm.annotations.Entry;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Entry(base = "ou=users",objectClasses = {"top","person","organizationalPerson","inetOrgPerson"})
+@Table(name = "user")
+public class User extends UserAction{
+		
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="user_id")
+	private Long userId;
+	
+	@Column(name="user_name")
+	@Attribute(name = "cn")
+	private String userName;
+
+	@Column(name="last_name")
+	@Attribute(name = "sn")
+	private String surname;
+	
+	@Column(name="password")
+	@Attribute(name = "userPassword")
+	private String password;
+	
+	@Column(name="is_deleted")
+	private Boolean isDeleted=false;
+	
+	@Column(name="identity")
+	private String identity;
+	
+	@Column(name = "email")
+	private String emailId;
+	
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+
+	public User(Integer createdBy, Integer modifiedBy, LocalDateTime modifiedDate, LocalDateTime createdDate,
+			Long userId, String userName, String surname, String password, Boolean isDeleted, String identity,
+			String emailId, List<Role> roleList) {
+		super(createdBy, modifiedBy, modifiedDate, createdDate);
+		this.userId = userId;
+		this.userName = userName;
+		this.surname = surname;
+		this.password = password;
+		this.isDeleted = isDeleted;
+		this.identity = identity;
+		this.emailId = emailId;
+		this.roleList = roleList;
+	}
+
+
+	
+	public User(Integer createdBy, Integer modifiedBy, LocalDateTime modifiedDate, LocalDateTime createdDate,
+			Long userId, String userName, String surname, String password, Boolean isDeleted, String identity,
+			String emailId) {
+		super(createdBy, modifiedBy, modifiedDate, createdDate);
+		this.userId = userId;
+		this.userName = userName;
+		this.surname = surname;
+		this.password = password;
+		this.isDeleted = isDeleted;
+		this.identity = identity;
+		this.emailId = emailId;
+	}
+
+
+
+	@OneToMany(mappedBy = "user")
+	private List<Role> roleList;
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	public String getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(String identity) {
+		this.identity = identity;
+	}
+
+
+	public User() {
+		super();
+	}
+	
+	
+}

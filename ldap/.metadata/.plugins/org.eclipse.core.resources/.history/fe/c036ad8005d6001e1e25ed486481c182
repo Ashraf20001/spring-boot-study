@@ -1,0 +1,5 @@
+package com.demo.ldap.utils;
+
+public class JwtUtils {
+
+}

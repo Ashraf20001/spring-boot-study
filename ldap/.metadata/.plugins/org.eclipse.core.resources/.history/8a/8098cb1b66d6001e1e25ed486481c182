@@ -1,0 +1,73 @@
+package com.demo.ldap.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.demo.ldap.dto.UserDto;
+import com.demo.ldap.entity.Role;
+import com.demo.ldap.entity.User;
+import com.demo.ldap.sql.repository.UserRepository;
+
+@Service
+public class UserService {
+
+		@Autowired
+		private UserRepository userRepository;
+		
+		@Autowired
+		private LdapTemplate ldapTemplate;
+		
+		public void saveUserDetails(UserDto user) throws Exception {
+			if(user==null) {
+				throw new Exception("User Information is not valid");
+			}
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			if(user.getPassword()==null) {
+				throw new Exception("Password should not be null");
+			}
+			String encryptedPassword = encoder.encode(user.getPassword());
+			User userDetails = convertDtoToUser(user,encryptedPassword);
+			userRepository.save(userDetails);
+		}
+
+		private User convertDtoToUser(UserDto user, String encryptedPassword) {
+			User userDetails = new User();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			User loggedInUserDetails = (User)authentication.getPrincipal();
+			userDetails.setUserName(user.getUserName());
+			userDetails.setEmailId(user.getEmailId());
+			userDetails.setPassword(encryptedPassword);
+			userDetails.setIdentity(UUID.randomUUID().toString());
+			userDetails.setCreatedDate(LocalDateTime.now());
+			userDetails.setCreatedBy(loggedInUserDetails.getUserId().intValue());
+			userDetails.setModifiedDate(LocalDateTime.now());
+			userDetails.setModifiedBy(loggedInUserDetails.getUserId().intValue());
+			
+			
+			List<Role> roleList = user.getRoles().stream()
+							.map(role->setRoles(role, userDetails)).toList();
+			userDetails.setRoleList(roleList);
+		
+			return userDetails;
+			
+		}
+		
+		private Role setRoles(String roleName,User userDetails){
+			Role role = new Role();
+			role.setCreatedDate(LocalDateTime.now());
+			role.setCreatedBy(userDetails.getCreatedBy());
+			role.setModifiedDate(LocalDateTime.now());
+			role.setModifiedBy(userDetails.getModifiedBy());
+			role.setRoleName(roleName);
+			return role;
+		}
+}
