@@ -59,10 +59,10 @@ public class LdapRepository {
 	            .add("cn", modifiedUserName)
 	            .build();
 
-	    // Rename the entry (modify the cn attribute)
+	    // modify the cn attribute
 	    ldapTemplate.rename(oldDn, newDn);
 
-	    // Now, modify other attributes (e.g., sn)
+	    // Rename sn
 	    Name dn = LdapNameBuilder.newInstance()
 	    		.add("ou","system")
 	            .add("ou", "users")
@@ -72,7 +72,6 @@ public class LdapRepository {
 	    DirContextOperations context = ldapTemplate.lookupContext(dn);
 	    context.setAttributeValue("sn", modifiedUserName);
 	    
-	    // Perform the modify operation
 	    ldapTemplate.modifyAttributes(dn, context.getModificationItems());
 	    
 	    

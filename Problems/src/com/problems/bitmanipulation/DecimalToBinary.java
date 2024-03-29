@@ -37,7 +37,10 @@ public class DecimalToBinary {
 		public static String convertDecimalToBinary(int n) {
 				int decimal=2;
 				String binary=""; 
-			
+				if(n==0) {
+					binary=0+binary;
+				}
+				
 				while(n>=1) {
 					binary=n%decimal+binary;
 					n=n/decimal;

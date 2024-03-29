@@ -5,11 +5,13 @@ public class BitwiseOperators {
 	public static void main(String[] args) {
 		int n=36;
 		int i=5;
-		int maskOfI=1<<i;
+		int maskOfI=1<<i;  // masking of bit 1;
 		switchOnBit(n,i,maskOfI);
 		switchOffBit(n,i,maskOfI);
 		toggle(n,i,maskOfI);
 		checkOffOrOn(n,i,maskOfI);
+		
+//		System.out.println(-7>>1); 
 	}
 
 	private static void toggle(int n, int i, int maskOfI) {
