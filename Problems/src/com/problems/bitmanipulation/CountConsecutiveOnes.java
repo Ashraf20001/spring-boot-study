@@ -4,7 +4,7 @@ public class CountConsecutiveOnes {
 		public static void main(String[] args) {
 			
 			int number=76;
-			DecimalToBinary.convertDecimalToBinary(number);
+			System.out.println(Integer.toBinaryString(number));
 			countLongestConsecutiveOnes(number);
 		}
 
@@ -12,7 +12,6 @@ public class CountConsecutiveOnes {
 			int count=0;
 			
 			while(number!=0) {
-				DecimalToBinary.convertDecimalToBinary(number<<1);
 				number=number & (number<<1);
 				count++;
 			}

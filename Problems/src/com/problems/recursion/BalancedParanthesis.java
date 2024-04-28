@@ -3,7 +3,7 @@ package com.problems.recursion;
 public class BalancedParanthesis {
 
 	public static void main(String[] args) {
-		int n=2;
+		int n=2;  // no of brackets in set (opening and closing) n=1 means one open and one close
 		char[] arr= new char[n*2];
 		balancedPar(arr,n,0,0,0);
 	}

@@ -2,8 +2,8 @@ package com.problems.recursion;
 
 public class JosephusProblem {
 			public static void main(String[] args) {
-				int n= 7;  // No of people
-				int k = 3; // Killing factor
+				int n= 8;  // No of people
+				int k = 4; // Killing factor
 				System.out.println(josephus(n,k));
 			}
 
@@ -13,5 +13,9 @@ public class JosephusProblem {
 				}
 				
 				return (josephus(n-1, k) + k) % n;  // Formula to identify the surviving person index value
+
+				/**
+				 * Formula : (jos(n-1,k)+k) % n
+				 */
 			}
 }

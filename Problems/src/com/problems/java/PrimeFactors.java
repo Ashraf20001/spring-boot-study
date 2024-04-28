@@ -9,6 +9,7 @@ public class PrimeFactors {
 		int nextInt = scanner.nextInt();
 		if(nextInt!=0) {
 			calculatePrimeFactors(nextInt);
+			System.out.println(-7>>1);
 		}
 
 	}

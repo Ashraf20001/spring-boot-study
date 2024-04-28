@@ -4,7 +4,7 @@ public class NumberOfSetBits {
 
 		public static void main(String[] args) {
 			int number=125;
-			DecimalToBinary.convertDecimalToBinary(number);
+			System.out.println(Integer.toBinaryString(number));
 			countNumberOfSetBits(number);
 		}
 
@@ -12,6 +12,7 @@ public class NumberOfSetBits {
 			int countBits=0;
 			while(number>0) {
 				number=number & number -1;
+				System.out.println(Integer.toBinaryString(number));
 				countBits++;
 			}
 			System.out.println(countBits);

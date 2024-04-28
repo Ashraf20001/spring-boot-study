@@ -2,10 +2,11 @@ package com.problems.recursion;
 
 public class Fibonacci {
 		public static void main(String[] args) {
-			for(int i=1; i<=10;i++) {
-				
-				System.out.println(fibonacci(i));
-			}
+//			for(int i=1; i<=10;i++) {
+//				
+//				System.out.println(fibonacci(i));
+//			}
+			System.out.println(fibonacci(6));
 		}
 
 		private static int fibonacci(int n) {

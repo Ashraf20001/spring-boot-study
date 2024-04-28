@@ -20,8 +20,9 @@ public class SubsetOfArray {
 				return 0;
 			}
 			
-			int res1= getPossibleSubsets(arr, sum-arr[i], i+1);
-			int res2= getPossibleSubsets(arr, sum, i+1);
+			int res1= getPossibleSubsets(arr, sum-arr[i], i+1);  // pick an element and contribute it for sum
+			int res2= getPossibleSubsets(arr, sum, i+1);         // not pick an element and no contribution for sum
+																 // incrementation is same for both cases			
 			return res1+res2;
 		}
 }

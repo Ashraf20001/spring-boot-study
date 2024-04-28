@@ -21,7 +21,7 @@ public class MaximumAndValuePair {
 			int res=0;
 			int mask=0;
 			for(int i=31; i>=0 ; i--) {
-				mask= 1<< i | res;            // 1 bit will be left shifted according to bit position and merge with result 
+				mask= 1<< i | res;            // set bit will be left shifted according to  position and merge with result 
 				int count= checkSetBitsCount(arr, mask);
 				if(count>=2) {
 					res= res | mask;      // update the result only if count > =2
@@ -29,4 +29,11 @@ public class MaximumAndValuePair {
 			}
 			return res;
 		}
+		
+		/**
+		 * 1. Masking
+		 * 2. Set bit Identification
+		 * 3. Count verification
+		 * 4. Merge of mask with result based on count
+		 */
 }

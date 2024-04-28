@@ -11,7 +11,7 @@ public class NthPalindromicBinary {
 
     private static int findNthPalindromicBinary(int n) {
     		
-    	// find l and count ( position of previous length's last palindromic progression)
+    	// find length and count ( position of previous length's last palindromic progression)
     	
     	int l=0,count=0;
     	while(count<n) {
@@ -19,7 +19,8 @@ public class NthPalindromicBinary {
     		count+=Math.pow(2,((l-1)/2));
     	}
     	
-    	count-=Math.pow(2,((l-1))/2);
+    	count-=Math.pow(2,((l-1))/2);  // we are subtracting the last count addition so that it 
+    								  //	would sync with previous length's last palindromic progression
     	
     	// Find the element of nth palindrome around the permutation set of the length obtained
     	
@@ -31,7 +32,7 @@ public class NthPalindromicBinary {
     	
     	// Generate final result
     	
-    	return ans | ReverseBinaryBits.reverseBits(ans,l);
+    	return ans | ReverseBinaryBits.revBits(ans,l);
     	
     }
 }

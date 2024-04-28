@@ -19,4 +19,14 @@ public class ShiftOddToEvenAndEvenToOddBits {
 				int evenHexa=0x55555555;
 				return (number & evenHexa)<<1;
 			}
+			
+			
+			/**
+			 * Things to remember here
+			 * 1. odd hexa = 0xAAAAAAAA ----> 8 A's
+			 * 2. even hexa= 0x55555555 ----> 8 5's
+			 * 3. odd -> triple right shift
+			 * 4. even-> left shift
+			 * 5. merge shifts using or(|)
+			 */
 }

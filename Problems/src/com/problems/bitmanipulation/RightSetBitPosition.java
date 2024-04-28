@@ -3,7 +3,7 @@ package com.problems.bitmanipulation;
 public class RightSetBitPosition {
 		public static void main(String[] args) {
 			int num=120;
-			DecimalToBinary.convertDecimalToBinary(num);
+			System.out.println(Integer.toBinaryString(num));
 //			int position=calculateRightSetBitPosition(num);	// Approach 1
 			int position = calculateRightSetBitPositionWithEfficientApproach(num); // Approach 2
 			System.out.println(position);
@@ -11,9 +11,9 @@ public class RightSetBitPosition {
 
 		private static int calculateRightSetBitPositionWithEfficientApproach(int num) {
 			int	mask= num & num-1;
-			DecimalToBinary.convertDecimalToBinary(mask);
+			System.out.println(Integer.toBinaryString(mask));
 			int result= num ^ mask;
-			return (int) (Math.log10(result)/Math.log10(2)) +1;
+			return (int) (Math.log10(result)/Math.log10(2)) +1; //( zero index position = log2(decimal result of xor)/log2(2) )
 		}
 
 		private static int calculateRightSetBitPosition(int num) {

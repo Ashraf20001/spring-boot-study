@@ -11,7 +11,7 @@ public class PhoneLetterCombination {
 
 		private static void phoneLC(String s, String ans) {
 			
-			if(s.length()==0) {
+			if(s.isEmpty()) {
 				System.out.println(ans);
 				return;
 			}

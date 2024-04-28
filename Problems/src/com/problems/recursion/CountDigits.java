@@ -2,16 +2,16 @@ package com.problems.recursion;
 
 public class CountDigits {
 		public static void main(String[] args) {
-			int count=0;
-			System.out.println(countDigits(103,count));
+			System.out.println(countDigits(103));
 		}
 
-		private static int countDigits(int i,int count) {
+		private static int countDigits(int i) {
 			if(i==0) {
-				return count;
+				return 0;
 			}
 
-			int res=countDigits(i/10,count+1);
+			int res=countDigits(i/10)+1;
 			return res;
 		}
+		
 }
