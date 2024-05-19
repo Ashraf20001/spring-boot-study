@@ -1,4 +1,4 @@
-package com.problems.arrays;
+package com.problems.arrays.searching.alg;
 
 public class LinearSearch {
 
