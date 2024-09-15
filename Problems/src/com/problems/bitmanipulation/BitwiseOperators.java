@@ -6,6 +6,10 @@ public class BitwiseOperators {
 		int n=36;
 		int i=5;
 		int maskOfI=1<<i;  // masking of bit 1;
+		System.out.println(Integer.toBinaryString(maskOfI)+"Mask of I");
+		System.out.println(Integer.toBinaryString(n-1)+" N-1");
+		System.out.println(Integer.toBinaryString(~maskOfI)+" Negation of Mask of I");
+
 		switchOnBit(n,i,maskOfI);
 		switchOffBit(n,i,maskOfI);
 		toggle(n,i,maskOfI);

@@ -9,7 +9,9 @@ public class DecimalToBinary {
 			Scanner scanner = new Scanner(System.in);
 			int nextInt = scanner.nextInt();
 			String decimalToBinary = convertDecimalToBinary(nextInt);
+			System.out.println(convertDecimalToBinaryUsingRecursion(nextInt)+" Recursion");
 			convertBinaryToDecimal(decimalToBinary);
+
 		}
 
 		public static void convertBinaryToDecimal(String decimalToBinary) {
@@ -48,5 +50,13 @@ public class DecimalToBinary {
 				
 				System.out.println(binary);
 				return binary;
+		}
+
+		public static String convertDecimalToBinaryUsingRecursion(int n){
+			if(n==0){
+				return 0+"";
+			}
+			return convertDecimalToBinaryUsingRecursion(n/2)+n%2;
+
 		}
 }

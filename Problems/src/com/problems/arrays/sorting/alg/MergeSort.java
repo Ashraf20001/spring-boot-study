@@ -15,17 +15,17 @@ public class MergeSort {
         int mid= (l+h)/2;
         mergeSort(arr,l,mid);
         mergeSort(arr,mid+1,h);
-        int[] arr1= new int[mid-l+1];
-        int[] arr2= new int[h-mid];
+        int[] arr1= new int[mid-l+1];   // Including mid element in the first array, hence we have +1 here
+        int[] arr2= new int[h-mid];    // Not included the mid
 
         int i=0; // arr1
         int j=0; // arr2
 
         for(;i<arr1.length;i++){
-            arr1[i]=arr[l+i];
+            arr1[i]=arr[l+i];        // lower index plus i index
         }
         for(;j<arr2.length;j++){
-            arr2[j]=arr[mid+1+j];
+            arr2[j]=arr[mid+1+j];   // lowe index (mid+1) plus j index
         }
         sortArray(arr1, arr2, arr,l);
     }

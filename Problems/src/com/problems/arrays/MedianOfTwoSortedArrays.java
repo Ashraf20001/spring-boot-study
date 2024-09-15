@@ -26,7 +26,7 @@ public class MedianOfTwoSortedArrays {
     private static float fidMedianUsingPartitioning(int l, int h, int m1, int[] arr1, int[] arr2) {
         while (l <= h) {
 
-            int m2 = (arr1.length + arr2.length + 1) / 2 - m1;
+            int m2 = (arr1.length + arr2.length + 1) / 2 - m1;          // median of 2nd array
 
             int l1 = m1 == 0 ? Integer.MIN_VALUE : arr1[m1 - 1];           // For median find . we will consider max of l1 and l2
             int r1 = m1 == arr1.length ? Integer.MAX_VALUE : arr1[m1];  // For median find , we will consider min of r1 and r2
