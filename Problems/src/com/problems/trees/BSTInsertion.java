@@ -14,7 +14,7 @@ public class BSTInsertion {
         root = insert(root, 50);
         root = insert(root, 30);
         root = insert(root, 20);
-        root = insert(root, 40);
+        root = insert(root, 70);
         root = insert(root, 70);
         root = insert(root, 60);
         root = insert(root, 80);
@@ -34,7 +34,7 @@ public class BSTInsertion {
             return new Node(element);
         }
 
-        if(root.key == element){
+        if(root.key == element){     // In case of duplicate entries, it will return same root
             return root;
         }
 
