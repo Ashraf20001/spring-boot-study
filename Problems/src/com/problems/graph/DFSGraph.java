@@ -35,8 +35,8 @@ public class DFSGraph  {
         visitedArray[sourceElement]= true;
         System.out.print(sourceElement+" ");
 
-        for(int i=0;i<adjElements.get(sourceElement).size();i++){
-           if(!visitedArray[adjElements.get(sourceElement).get(i)]){
+        for(int i=0;i<adjElements.get(sourceElement).size();i++){          // checking each individual  adjacent elements has its own
+           if(!visitedArray[adjElements.get(sourceElement).get(i)]){       //  adjacent elements
                 dfsRec(adjElements,adjElements.get(sourceElement).get(i),visitedArray);
             }
         }
