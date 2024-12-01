@@ -1,10 +1,10 @@
 package com.problems.arrays;
 
-public class RotateArray {
+public class RotateArrayToLeft {
 
     public static void main(String[] args) {
-            int [] arr ={2,3,4,5,6};  // {4,3,2,6,5} // {5,6,2,3,4}
-            int k=20;
+            int [] arr ={-1,-100,3,99};  // {4,3,2,6,5} // {5,6,2,3,4}
+            int k=2;
 
             rotateArray(arr,k);
             for (int el:arr){
