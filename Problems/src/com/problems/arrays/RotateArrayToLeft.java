@@ -11,7 +11,7 @@ public class RotateArrayToLeft {
             System.out.print(el);
             System.out.print(" ");
             }
-
+            // If rotate to right means, change k value to negative
     }
 
     public static void rotateArray(int[] arr, int k) {
