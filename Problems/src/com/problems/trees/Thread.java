@@ -72,7 +72,7 @@ class Sychronise{
 
     private int count =0;
 
-    public  void addCount(){
+    public synchronized void addCount(){
         if(count==3){
             System.out.println("decrement" + " "+java.lang.Thread.currentThread().getName());
             decreasecount();
@@ -90,7 +90,7 @@ class Sychronise{
         }
     }
 
-    private  void decreasecount() {
+    private synchronized void decreasecount() {
         for(int i=3;i>0;i--){
             this.count --;
             try {
