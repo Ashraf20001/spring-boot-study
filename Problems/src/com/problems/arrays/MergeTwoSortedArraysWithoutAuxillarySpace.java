@@ -8,7 +8,10 @@ public class MergeTwoSortedArraysWithoutAuxillarySpace {
         int[] arr2={2,6,7};
 //        mergeTwoSSortedArraysUsingNaiveApproach(arr1,arr2);
 //        mergeTwoSortedArraysUsingEff1(arr1,arr2);
-        mergeTwoSortedArraysUsingEff2(arr1,arr2);
+//        mergeTwoSortedArraysUsingEff2(arr1,arr2);
+//        System.out.println(Arrays.toString(arr1)+" "+Arrays.toString(arr2));
+
+        mergeTwoSortedArrayUsingGap(arr1,arr2);
         System.out.println(Arrays.toString(arr1)+" "+Arrays.toString(arr2));
     }
 
@@ -60,4 +63,45 @@ public class MergeTwoSortedArraysWithoutAuxillarySpace {
         Arrays.sort(arr1);
     }
 
+    private static void mergeTwoSortedArrayUsingGap(int[] arr1, int[] arr2) {
+        int m = arr1.length;
+        int n = arr2.length;
+        int len = m+n;
+
+        int gap = (len/2) + (len%2);  // this is equal to Math.ceil(len/2)
+
+        while(gap > 0){
+            int left =0;
+            int right = left + gap;
+
+            while(right < len){
+                // arr1 and arr2
+                if(left< m && right >=m){
+                    swapElements(arr1,arr2, left, right - m);  // right -n because to find second array index
+                }
+
+                // arr2 and arr2
+               else if(left >=m){
+                    swapElements(arr2,arr2, left-m, right - m);
+                } else {
+                   swapElements(arr1,arr1,left,right);
+                }
+
+               left ++; right ++;
+
+            }
+
+            if(gap ==1) break;
+
+            gap = (gap/2)+(gap%2);
+        }
+    }
+
+    private static void swapElements(int[] arr1, int[] arr2, int ind1, int ind2) {
+        if(arr1[ind1]>arr2[ind2]){
+            int temp = arr1[ind1];
+            arr1[ind1] = arr2[ind2];
+            arr2[ind2] = temp;
+        }
+    }
 }
