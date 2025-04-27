@@ -1,6 +1,7 @@
-package com.problems.trees;
+package com.problems.threads;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class Thread {
     public static void main(String[] args) {
@@ -62,11 +63,19 @@ public class Thread {
            }
             return 42;
         });
-
-        Integer value = integerCompletableFuture.join();
-        System.out.println(value);
+        CompletableFuture<Void> future = integerCompletableFuture.thenAccept(el -> System.out.println(el + " :)"));
+//        Integer value = integerCompletableFuture.join();
+//        System.out.println(value);
+        try {
+            future.get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
+
 
 class Sychronise{
 
