@@ -9,7 +9,8 @@ public class ExecutorPools {
     public static void main(String[] args) {
         try {
             fixedThread();
-        cachedThread();
+            System.out.println("Reaching to cache pool");
+            cachedThread();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -19,12 +20,14 @@ public class ExecutorPools {
     private static void fixedThread() throws InterruptedException {
         int availableProcessorCount = Runtime.getRuntime().availableProcessors();
         ExecutorService fixedThreadPool = Executors.newFixedThreadPool(availableProcessorCount);
-        fixedThreadPool.execute(()-> System.out.println("Hello"));
+        fixedThreadPool.submit(()-> {
+            for(int i=0; i<5;i++){
+                System.out.println("Hello "+ i);
+            }
+        });
         boolean b = fixedThreadPool.awaitTermination(3, TimeUnit.SECONDS);
         fixedThreadPool.shutdown();
-        if(b){
-            System.out.println("Fixed thread is killed");
-        }
+        System.out.println("Fixed thread is killed");
     }
 
     private  static  void cachedThread() throws InterruptedException {
@@ -32,6 +35,7 @@ public class ExecutorPools {
         cachedThreadPool.execute(()-> System.out.println("Cached pool"));
         cachedThreadPool.awaitTermination(4,TimeUnit.SECONDS);
         cachedThreadPool.shutdown();
+        System.out.println("Cached thread is shut down");
     }
 
     private static void scheduledThreadPool(){
