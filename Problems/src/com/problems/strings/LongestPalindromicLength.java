@@ -9,6 +9,8 @@ public class LongestPalindromicLength {
 
         ReplaceSpace replaceSpace = new ReplaceSpace();
         System.out.println(replaceSpace.replaceSpace("Mr John Smith"));
+
+        System.out.println(longestPalindromicLength("geeks"));
     }
 
     public static String longestCommonPrefix(String[] strs) {
@@ -25,6 +27,46 @@ public class LongestPalindromicLength {
             }
         }
         return s1.substring(0,ind);
+    }
+
+    public static String longestPalindromicLength(String s){
+       boolean[][] dpTable = new boolean [s.length()][s.length()];
+
+       int n = s.length();
+       int start =0,maxlength = 1;
+       for(int i=0;i<n;i++){
+           dpTable[i][i]=true;
+       }
+
+       for(int i=0;i<n-1;i++){
+           if(s.charAt(i)==s.charAt(i+1)){
+               dpTable[i][i+1]=true;
+               if(maxlength<2){
+                   start=i;
+                   maxlength = 2;
+               }
+           }
+       }
+
+       // substring for length greater than 3
+
+       for(int k=3;k<=n;k++){
+           for(int i=0;i<n-k+1;i++){ // starting index
+               int j=k+i-1;  // ending index
+               if(dpTable[i+1][j-1] && s.charAt(i) == s.charAt(j)){
+                   dpTable[i][j]=true;
+                   if(k>maxlength){
+                       maxlength = k;
+                       start = i;
+                   }
+               }
+
+           }
+       }
+        System.out.println("Max length "+maxlength);
+       return s.substring(start,start+maxlength);
+
+
     }
 }
 
