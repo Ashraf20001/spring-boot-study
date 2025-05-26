@@ -39,5 +39,23 @@ public class AnagramCheck {
         }
 
         return true;
+
+
+        // run time 1ms
+
+//        int[] count = new int[26];
+//        for(char c : s.toCharArray()){
+//            count[c - 'a']++;
+//        }
+//        for(char c1 : t.toCharArray()){
+//            count[c1 - 'a']--;
+//        }
+//
+//        for(int val : count){
+//            if(val != 0){
+//                return false;
+//            }
+//        }
+//        return true;
     }
 }
