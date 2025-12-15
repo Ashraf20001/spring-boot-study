@@ -8,7 +8,7 @@ import java.util.stream.StreamSupport;
 
 public class FindingOccurenceOfCharacter {
     public static void main(String[] args) {
-        String str= "abcdefghijklmnopqrstuvwxyz";
+        String str= "abcdefghijkklmnopqrstuvwxyz";
         char c = 'e';
 
         IntStream characters = str.chars();
@@ -20,8 +20,8 @@ public class FindingOccurenceOfCharacter {
 
 
         System.out.println(str.chars().mapToObj(el->(char)el).collect(Collectors.groupingBy(el->el,Collectors.counting())).entrySet()
-                .stream().sorted(Collections.reverseOrder()).
-                map(Map.Entry::getKey).toList().get(0));
+                .stream().sorted(Map.Entry.<Character,Long>comparingByValue().reversed()).
+                map(Map.Entry::getKey).skip(1).findFirst().orElse(' '));
 
 //        Iterator<String> iterator = Arrays.asList("a", "b", "c").iterator();
 //        Spliterators.spliterator(iterator,10,Spliterator.ORDERED);           // With size known

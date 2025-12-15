@@ -30,6 +30,7 @@ public class AverageSlidingWindow {
         System.out.println(IntStream.range(0, integerArrayList.size() - window + 1)
                 .mapToObj(i->integerArrayList.subList(i,i+window))
                 .map(el->el.stream().mapToInt(Integer::intValue).average())
+                .filter(OptionalDouble::isPresent)
                 .map(OptionalDouble::getAsDouble)
                 .toList());
 
