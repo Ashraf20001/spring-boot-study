@@ -12,5 +12,14 @@ public class ReversingString {
             return stringBuilder.reverse();
 
         }).collect(Collectors.joining(" ")));
+
+        // Without using StringBuilder
+
+        System.out.println(Arrays.stream(s.split(" "))
+                .map(word->Arrays.stream(word.split(""))
+                        .reduce("",(a,b)->b+a)
+                ).collect(Collectors.joining(" ")));
+
     }
+
 }

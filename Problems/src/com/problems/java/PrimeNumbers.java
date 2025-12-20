@@ -70,7 +70,7 @@ public class PrimeNumbers {
 				return false;
 			}
 			for(int i=5; i<=Math.sqrt(num1);i=i+6) {
-				if(num1%i==0) {
+				if(num1%i==0 || num1%(i+2) == 0) {
 					return false;
 				}
 			}
