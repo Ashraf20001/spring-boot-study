@@ -1,8 +1,5 @@
 package com.problems.stack;
 
-import java.util.ArrayList;
-import java.util.Stack;
-
 public class StockSpan {
 
     public static void main(String[] args) throws Exception{
