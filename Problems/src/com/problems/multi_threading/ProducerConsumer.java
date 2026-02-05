@@ -2,7 +2,7 @@ package com.problems.multi_threading;
 
 public class ProducerConsumer {
     public static void main(String[] args) throws InterruptedException {
-        SharedObj shared = new SharedObj();
+        Shared shared = new Shared();
 
         Thread producer1 = new Thread(new Producer(shared), "PR-1");
         Thread producer2 = new Thread(new Producer(shared), "PR-2");
@@ -11,14 +11,14 @@ public class ProducerConsumer {
         Thread consumer2 = new Thread(new Consumer(shared), "CNS-2");
 
         producer1.start();
-        producer1.join();
+//        producer1.join();
         producer2.start();
-        producer2.join();
+//        producer2.join();
 
         consumer1.start();
-        consumer1.join();
+//        consumer1.join();
         consumer2.start();
-        consumer2.join();
+//        consumer2.join();
     }
 }
 
@@ -49,9 +49,9 @@ class Shared {
 
 class Producer implements Runnable {
 
-    private SharedObj shared;
+    private Shared shared;
 
-    Producer(SharedObj shared) {
+    Producer(Shared shared) {
         this.shared = shared;
     }
 
@@ -69,9 +69,9 @@ class Producer implements Runnable {
 
 class Consumer implements Runnable {
 
-    private SharedObj shared;
+    private Shared shared;
 
-    Consumer(SharedObj shared) {
+    Consumer(Shared shared) {
         this.shared = shared;
     }
 

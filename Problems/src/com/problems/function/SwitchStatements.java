@@ -42,6 +42,7 @@ public class SwitchStatements {
         return switch (tuesday){
             case String s -> "It is String";
             case Integer i when i.equals(1) -> "123";
+            case null -> "It is null man";
             default -> null;
         };
     }

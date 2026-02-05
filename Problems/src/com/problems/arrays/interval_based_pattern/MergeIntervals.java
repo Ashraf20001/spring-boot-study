@@ -24,7 +24,7 @@ public class MergeIntervals {
             if(ints.isEmpty() || ints.getLast()[1]<el[0]){
                 ints.add(el);
             }else{
-                ints.getLast()[1] = el[1];
+                ints.getLast()[1] = Math.max(ints.getLast()[1],el[1]);
             }
         }
         return ints;
